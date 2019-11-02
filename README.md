@@ -4,6 +4,7 @@ SmartDoor is a distributed system that authenticates people and provides them wi
 
 ## Architecture
 
+![SmartDoor](https://github.com/NikhilNar/SmartDoor/blob/master/architecture.png)
 
 ## Team
 
