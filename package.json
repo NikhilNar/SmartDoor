@@ -1,0 +1,15 @@
+{
+  "name": "SmartDoor",
+  "version": "0.0.0",
+  "description": "A smart virtual door",
+  "main": "index.js",
+  "author": "Chinmay Wyawahare",
+  "private": true,
+  "license": "BSD",
+  "dependencies": {
+    "filepond": "^4.7.4"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
