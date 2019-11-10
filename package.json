@@ -6,9 +6,7 @@
   "author": "Chinmay Wyawahare",
   "private": true,
   "license": "BSD",
-  "dependencies": {
-    "filepond": "^4.7.4"
-  },
+  "dependencies": {},
   "scripts": {
     "start": "node index.js"
   }
