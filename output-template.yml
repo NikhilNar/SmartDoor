@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  LFOwner:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.7
+      CodeUri: s3://cc-smart-door/94e7cf840c1f8e0950185888b5834421
+      Handler: lf_owner.handler
+      Events:
+        HttpPost:
+          Type: Api
+          Properties:
+            Path: /grant_access
+            Method: post
+      Policies:
+      - CloudWatchLogsFullAccess
+  Passcodes:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: faceId
+        AttributeType: S
+      - AttributeName: number
+        AttributeType: S
+      KeySchema:
+      - AttributeName: faceId
+        KeyType: HASH
+      - AttributeName: number
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  Visitors:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: faceId
+        AttributeType: S
+      KeySchema:
+      - AttributeName: faceId
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  LFVisitor:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.7
+      CodeUri: s3://cc-smart-door/94e7cf840c1f8e0950185888b5834421
+      Handler: lf_owner.handler
+      Events:
+        HttpPost:
+          Type: Api
+          Properties:
+            Path: /gain_access
+            Method: post
+      Policies:
+      - CloudWatchLogsFullAccess
