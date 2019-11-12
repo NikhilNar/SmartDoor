@@ -14,12 +14,21 @@
       <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
       <script type="text/javascript" src="../js/apigClient.js"></script>
       <script src="../js/main.js"></script>
+      <!-- Fetch Image from URL -->
+      <script>
+        function loadImage() { 
+          var imgURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname + window.location.search;
+          document.getElementById("visitor-img").src = imgURL;
+        } 
+      </script>
   </head>
-  <body>
+  <body onload="loadImage()">
     <div class="container">  
       <form id="contact" action="" method="post">
         <h3>Visitor Information</h3>
         <h4>Fill information about this visitor</h4>
+        <!-- Get visitor's image from rekognition URL -->
+        <img id="visitor-img" class="img-fluid" alt="Responsive image" height="450px" width="350px">
         <fieldset>
           <input placeholder="Name" type="text" tabindex="1" required autofocus>
         </fieldset>
@@ -29,7 +38,6 @@
         <fieldset>
           <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
         </fieldset>
-        <!-- <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a></p> -->
       </form>
     </div>
   </body>
