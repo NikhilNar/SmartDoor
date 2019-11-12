@@ -21,6 +21,7 @@ Resources:
     Type: AWS::DynamoDB::Table
     # Specify the composite key here
     Properties:
+      TableName: cc-smart-door-passcodes
       AttributeDefinitions:
         - AttributeName: faceId
           AttributeType: S
@@ -28,9 +29,9 @@ Resources:
           AttributeType: S
       KeySchema:
         - AttributeName: faceId
-          KeyType: HASH
-        - AttributeName: number
           KeyType: RANGE
+        - AttributeName: number
+          KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
@@ -38,6 +39,7 @@ Resources:
   Visitors:
     Type: AWS::DynamoDB::Table
     Properties:
+      TableName: cc-smart-door-visitors
       AttributeDefinitions:
         - AttributeName: faceId
           AttributeType: S
@@ -53,7 +55,7 @@ Resources:
     Properties:
       Runtime: python3.7
       CodeUri: ./lambda-functions
-      Handler: lf_owner.handler
+      Handler: lf_visitor.handler
       Events:
         HttpPost:
           Type: Api
@@ -62,3 +64,10 @@ Resources:
             Method: post
       Policies:
         - CloudWatchLogsFullAccess
+
+Globals:
+  Api:
+    Cors:
+      AllowMethods: "'*'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"

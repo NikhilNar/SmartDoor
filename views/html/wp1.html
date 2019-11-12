@@ -2,6 +2,7 @@
 <html>
   <head>
       <link rel="stylesheet" type="text/css" href="../css/style.css">
+      <script type="text/javascript" src="../js/lib/jquery-1.11.0.min.js"></script>
       <script type="text/javascript" src="../js/lib/axios/dist/axios.standalone.js"></script>
       <script type="text/javascript" src="../js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
       <script type="text/javascript" src="../js/lib/CryptoJS/rollups/sha256.js"></script>
@@ -30,14 +31,16 @@
         <!-- Get visitor's image from rekognition URL -->
         <img id="visitor-img" class="img-fluid" alt="Responsive image" height="450px" width="350px">
         <fieldset>
-          <input placeholder="Name" type="text" tabindex="1" required autofocus>
+          <input placeholder="Name" type="text" id="v_name" name="v_name" tabindex="1" required autofocus>
         </fieldset>
         <fieldset>
-          <input placeholder="Phone Number" type="text" tabindex="2" required>
+          <input placeholder="Phone Number" type="text" name="v_number" id="v_number" tabindex="2" required>
         </fieldset>
         <fieldset>
           <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
         </fieldset>
+        <h3 id="answer" style="color: green;"></h3>
+        <!-- <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a></p> -->
       </form>
     </div>
   </body>
