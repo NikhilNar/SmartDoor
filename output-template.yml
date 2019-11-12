@@ -5,7 +5,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: python3.7
-      CodeUri: s3://cc-smart-door/94e7cf840c1f8e0950185888b5834421
+      CodeUri: s3://cc-smartdoor/9ff9cb33794083ab6add11ef9775c1cc
       Handler: lf_owner.handler
       Events:
         HttpPost:
@@ -18,6 +18,7 @@ Resources:
   Passcodes:
     Type: AWS::DynamoDB::Table
     Properties:
+      TableName: cc-smart-door-passcodes
       AttributeDefinitions:
       - AttributeName: faceId
         AttributeType: S
@@ -34,6 +35,7 @@ Resources:
   Visitors:
     Type: AWS::DynamoDB::Table
     Properties:
+      TableName: cc-smart-door-visitors
       AttributeDefinitions:
       - AttributeName: faceId
         AttributeType: S
@@ -47,8 +49,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: python3.7
-      CodeUri: s3://cc-smart-door/94e7cf840c1f8e0950185888b5834421
-      Handler: lf_owner.handler
+      CodeUri: s3://cc-smartdoor/9ff9cb33794083ab6add11ef9775c1cc
+      Handler: lf_visitor.handler
       Events:
         HttpPost:
           Type: Api
@@ -57,3 +59,9 @@ Resources:
             Method: post
       Policies:
       - CloudWatchLogsFullAccess
+Globals:
+  Api:
+    Cors:
+      AllowMethods: '''*'''
+      AllowHeaders: '''*'''
+      AllowOrigin: '''*'''

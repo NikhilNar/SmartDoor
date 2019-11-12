@@ -9,7 +9,7 @@ SmartDoor is a distributed system that authenticates people and provides them wi
 ## Deoployment
 
 ### Package:
-aws cloudformation package --template-file template.yml --s3-bucket smart-door --output-template-file output-template.yml
+aws cloudformation package --template-file template.yml --s3-bucket cc-smartdoor --output-template-file output-template.yml
 
 ### Deploy
 aws cloudformation deploy --template-file output-template.yml --capabilities CAPABILITY_IAM --stack-name smart-door
