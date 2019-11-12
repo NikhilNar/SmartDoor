@@ -5,7 +5,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: python3.7
-      CodeUri: s3://cc-smartdoor/9ff9cb33794083ab6add11ef9775c1cc
+      CodeUri: s3://cc-smartdoor/64ca474a3fd571adc108b048a08b5977
       Handler: lf_owner.handler
       Events:
         HttpPost:
@@ -15,20 +15,19 @@ Resources:
             Method: post
       Policies:
       - CloudWatchLogsFullAccess
+      - AmazonRekognitionFullAccess
+      - AmazonDynamoDBFullAccess
+      - AmazonSNSFullAccess
   Passcodes:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: cc-smart-door-passcodes
       AttributeDefinitions:
-      - AttributeName: faceId
-        AttributeType: S
-      - AttributeName: number
+      - AttributeName: phone_number
         AttributeType: S
       KeySchema:
-      - AttributeName: faceId
+      - AttributeName: phone_number
         KeyType: HASH
-      - AttributeName: number
-        KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
@@ -49,7 +48,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: python3.7
-      CodeUri: s3://cc-smartdoor/9ff9cb33794083ab6add11ef9775c1cc
+      CodeUri: s3://cc-smartdoor/64ca474a3fd571adc108b048a08b5977
       Handler: lf_visitor.handler
       Events:
         HttpPost:

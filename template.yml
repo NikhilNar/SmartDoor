@@ -16,6 +16,9 @@ Resources:
             Method: post
       Policies:
         - CloudWatchLogsFullAccess
+        - AmazonRekognitionFullAccess
+        - AmazonDynamoDBFullAccess
+        - AmazonSNSFullAccess
 
   Passcodes:
     Type: AWS::DynamoDB::Table
@@ -23,14 +26,10 @@ Resources:
     Properties:
       TableName: cc-smart-door-passcodes
       AttributeDefinitions:
-        - AttributeName: faceId
-          AttributeType: S
-        - AttributeName: number
+        - AttributeName: phone_number
           AttributeType: S
       KeySchema:
-        - AttributeName: faceId
-          KeyType: RANGE
-        - AttributeName: number
+        - AttributeName: phone_number
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 5

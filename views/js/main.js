@@ -1,11 +1,12 @@
 $(function () {
+    loadImage();
     $('#contact').on('submit', function (e) {
         e.preventDefault();  //prevent form from submitting
         let data = {};
         data.v_name = $('#v_name').val();
         data.v_number = $('#v_number').val();
         let image_url = getUrlParameter("image");
-        if (image_url !== undefined){
+        if (image_url !== undefined) {
             data.image_url = image_url;
         }
         let json_data = JSON.stringify(data);
@@ -18,7 +19,7 @@ $(function () {
 function send_request(payload) {
     $.ajax({
         method: 'POST',
-        url: 'https://airf5aqaa2.execute-api.us-west-2.amazonaws.com/Prod/grant_access',
+        url: 'https://b5m247eya7.execute-api.us-west-2.amazonaws.com/Prod/gain_access',
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(payload),
@@ -55,3 +56,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+function loadImage() {
+    document.getElementById("visitor-img").src = getUrlParameter("image");
+}

@@ -14,17 +14,13 @@
       <script type="text/javascript" src="../js/lib/apiGatewayCore/simpleHttpClient.js"></script>
       <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
       <script type="text/javascript" src="../js/apigClient.js"></script>
-      <script src="../js/owner.js"></script>
+      <script src="../js/main.js"></script>
       <!-- Fetch Image from URL -->
       <script>
-        function loadImage() { 
-          var imgURL = window.location.search.split('=');
-          var imgPath = imgURL[1];
-          document.getElementById("visitor-img").src = imgPath;
-        } 
+
       </script>
   </head>
-  <body onload="loadImage()">
+  <body>
     <div class="container">  
       <form id="contact" action="" method="post">
         <h3>Visitor Information</h3>
