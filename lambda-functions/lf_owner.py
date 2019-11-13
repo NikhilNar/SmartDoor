@@ -32,10 +32,18 @@ def handler(event, context):
         print("Image URL: {}".format(image_url))
 
         # Get bucket and key
-        bucket, key = split_s3_path(image_url)
+        try:
+            bucket, key = split_s3_path(image_url)
+        except Exception:
+            bucket, key = None, None
+        if not bucket or not key:
+            return build_response(500, {"message": "Error parsing S3 Link"})
 
         # Index the face and get the faceID
         face_id = index_face_and_get_face_id(bucket, key)
+
+        if not face_id:
+            return build_response(500, {"message": {'contentType': 'PlainText', 'content': "No face detected"}})
 
         # Store into DynamoDB Tables
         store_into_visitors(face_id, image_url, v_name, v_phone)
@@ -92,9 +100,10 @@ def validate(body):
         )
     return {'isValid': True}
 
+
 def clean_phone(phone):
     phone = re.sub(r'[^0-9]', "", phone)
-    if phone[0] == '1':
+    if phone and phone[0] == '1':
         phone = phone[1:]
     return phone
 
@@ -112,6 +121,7 @@ def isvalid_phone(phone):
 def format_phone(phone):
     us_prefix = "+1"
     return us_prefix + phone
+
 
 def store_into_visitors(face_id, image, name, phone_number):
     dynamodb = boto3.resource('dynamodb', region_name=app_region)
@@ -201,4 +211,8 @@ def index_face_and_get_face_id(bucket, key, image_id="1", region=app_region):
         ExternalImageId=image_id,
         DetectionAttributes=(),
     )
-    return response['FaceRecords'][0]['Face']['FaceId']
+    face_records = response['FaceRecords']
+    if face_records and len(face_records) > 0:
+        return face_records[0]['Face']['FaceId']
+    else:
+        return None
