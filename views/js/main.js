@@ -19,7 +19,7 @@ $(function () {
 function send_request(payload) {
     $.ajax({
         method: 'POST',
-        url: 'https://b5m247eya7.execute-api.us-west-2.amazonaws.com/Prod/grant_access',
+        url: 'https://ccg20ezekb.execute-api.us-west-2.amazonaws.com/Prod/grant_access',
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(payload),
