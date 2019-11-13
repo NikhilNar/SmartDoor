@@ -5,7 +5,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: python3.7
-      CodeUri: s3://cc-smartdoor/64ca474a3fd571adc108b048a08b5977
+      CodeUri: s3://cc-smartdoor/0247d8798209c5d1e934f1a17165c1a0
       Handler: lf_owner.handler
       Events:
         HttpPost:
@@ -48,7 +48,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: python3.7
-      CodeUri: s3://cc-smartdoor/64ca474a3fd571adc108b048a08b5977
+      CodeUri: s3://cc-smartdoor/0247d8798209c5d1e934f1a17165c1a0
       Handler: lf_visitor.handler
       Events:
         HttpPost:
