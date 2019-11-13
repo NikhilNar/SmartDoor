@@ -14,6 +14,25 @@
       <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
       <script type="text/javascript" src="../js/apigClient.js"></script>
       <script src="../js/main.js"></script>
+      <!-- Fetch OTP and Phone from URl -->
+      <script>
+        function authenticateUser() {
+
+          var otp = $('#otp').val(); // fetch OTP from form
+          var phone = getUrlParameter("phone"); // fetch phone from URL
+          let data = {};
+          data.otp = otp;
+          data.phone = phone;
+
+          // Set value of phone in hidden field 'phone'
+          document.getElementById("phone").innerHTML = phone;
+
+          let json_data = JSON.stringify(data);
+          console.log(json_data);
+          user_request(json_data)
+        }
+      
+      </script>
   </head>
   <style>
       body {
@@ -43,13 +62,14 @@
         transition: background-color 0.3s ease-in-out;
       }
   </style>
-  <body>
+  <body onLoad="authenticateUser()">
     <div class="container">  
-      <form id="contact" action="" method="post">
+      <form id="contact" action="https://smartdoorb1.s3-us-west-2.amazonaws.com/views/html/door.html" method="post">
         <h3>SmartDoor Authentication</h3>
         <h4>Enter the OTP to enter the premises:</h4>
         <fieldset>
-          <input name ="OTP" placeholder="OTP" type="text" tabindex="1" required autofocus>
+          <input name ="otp" id="otp" placeholder="OTP" type="text" tabindex="1" required autofocus>
+          <input type="hidden" id ="phone" name="phone" />
         </fieldset>
         <fieldset>
           <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
