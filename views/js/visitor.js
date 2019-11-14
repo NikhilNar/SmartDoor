@@ -3,7 +3,7 @@ function user_request(payload) {
     $.ajax({
         method: 'POST',
         // Add URL from API endpoint
-        url: ' https://ccg20ezekb.execute-api.us-west-2.amazonaws.com/Prod/gain_access ',
+        url: ' https://ccg20ezekb.execute-api.us-west-2.amazonaws.com/Prod/gain_access',
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(payload),
