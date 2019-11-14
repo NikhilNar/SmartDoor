@@ -28,9 +28,7 @@ def handler(event, context):
         phone_number = body["phone_number"] # get phone from URL
 
         print("OTP: {}".format(otp))
-        # print("OTP: {}".format(type(otp)))
         print("Phone: {}".format(phone_number))
-        # print("Phone type: {}".format(type(phone_number)))
 
         # Validate OTP for the phone number
         try:
