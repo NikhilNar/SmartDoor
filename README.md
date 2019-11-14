@@ -6,13 +6,23 @@ SmartDoor is a distributed system that authenticates people and provides them wi
 
 ![SmartDoor](https://github.com/NikhilNar/SmartDoor/blob/master/architecture.png)
 
-## Deoployment
+## Deployment
 
 ### Package:
 aws cloudformation package --template-file template.yml --s3-bucket cc-smartdoor --output-template-file output-template.yml
 
-### Deploy
+### Deploy:
 aws cloudformation deploy --template-file output-template.yml --capabilities CAPABILITY_IAM --stack-name smart-door
+
+## Application Preview
+
+### Authorize visitor (WP1):
+
+![Authorize-visitor](https://github.com/NikhilNar/SmartDoor/blob/master/authorize-visitor.png)
+
+### Authenticate visitor (WP2): 
+
+![Authenticate-visitor](https://github.com/NikhilNar/SmartDoor/blob/master/authenticate-visitor.png)
 
 ## Team
 
