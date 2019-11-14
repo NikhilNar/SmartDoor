@@ -13,7 +13,15 @@
       <script type="text/javascript" src="../js/lib/apiGatewayCore/simpleHttpClient.js"></script>
       <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
       <script type="text/javascript" src="../js/apigClient.js"></script>
-      <script src="../js/main.js"></script>
+      <!-- <script src="../js/visitor.js"></script> -->
+      <script>
+          function getUserInfo() {
+            user_name = localStorage.getItem("username");  
+            console.log(user_name)
+            document.getElementById("username").innerHTML = user_name;
+          }
+      </script>
+
   </head>
   <style>
         body {
@@ -25,7 +33,7 @@
           background: #57068c;
         }
     </style>
-  <body>
+  <body onLoad="getUserInfo()">
     <div class="container">  
       <form id="contact" action="" method="post">
         <h1>Welcome</h1>

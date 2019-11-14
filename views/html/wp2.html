@@ -13,12 +13,12 @@
       <script type="text/javascript" src="../js/lib/apiGatewayCore/simpleHttpClient.js"></script>
       <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
       <script type="text/javascript" src="../js/apigClient.js"></script>
-      <script src="../js/main.js"></script>
+      <script src="../js/visitor.js"></script>
       <!-- Fetch OTP and Phone from URl -->
       <script>
         function authenticateUser() {
 
-          var otp = $('#otp').val(); // fetch OTP from form
+          var otp = document.getElementById("otp").value; // fetch OTP from form
           var phone = getUrlParameter("phone"); // fetch phone from URL
           let data = {};
           data.otp = otp;
@@ -68,8 +68,8 @@
         <h3>SmartDoor Authentication</h3>
         <h4>Enter the OTP to enter the premises:</h4>
         <fieldset>
-          <input name ="otp" id="otp" placeholder="OTP" type="text" tabindex="1" required autofocus>
-          <input type="hidden" id ="phone" name="phone" />
+          <input name ="otp" id="otp" placeholder="OTP" type="text" tabindex="1" value="" required autofocus>
+          <input type="hidden" id ="phone" name="phone" value="value"/>
         </fieldset>
         <fieldset>
           <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
