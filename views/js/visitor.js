@@ -1,10 +1,9 @@
-
 // ajax request - POST - User authorization through SmartDoor
 function user_request(payload) {
     $.ajax({
         method: 'POST',
         // Add URL from API endpoint
-        url: ' https://ccg20ezekb.execute-api.us-west-2.amazonaws.com/Prod/grant_access ',
+        url: ' https://ccg20ezekb.execute-api.us-west-2.amazonaws.com/Prod/gain_access ',
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(payload),
@@ -14,9 +13,11 @@ function user_request(payload) {
                 message = 'The user was granted access through SmartDoor!';
 
                  // Override username value from API response - username
-				 var user_name = JSON.parse(res);
+				 var response = JSON.parse(res);
+				 var user_name = response["body"].user_name;
+				 console.log(user_name);
 				 var user = getUserInfo(user_name);
-				 console.log(user)
+				 console.log(user);
             }
             $('#answer').html(message).css("color", "green");
             $('#contact-submit').prop('disabled', true);
@@ -49,5 +50,6 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 // Set username in door.html
 var user = function getUserInfo(user_name) {
+	console.log(user_name)
 	localStorage.setItem("username", user_name);  
 }
