@@ -49,6 +49,20 @@ Resources:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
 
+  VisitorsInfo:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: cc-smart-door-visitors-info
+      AttributeDefinitions:
+        - AttributeName: phone_number
+          AttributeType: S
+      KeySchema:
+        - AttributeName: phone_number
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5      
+
   LFVisitor:
     Type: AWS::Serverless::Function
     Properties:
@@ -63,6 +77,7 @@ Resources:
             Method: post
       Policies:
         - CloudWatchLogsFullAccess
+        - AmazonDynamoDBFullAccess
 
 Globals:
   Api:
