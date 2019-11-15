@@ -1,3 +1,15 @@
+$(function () {
+    $('#contact').on('submit', function (e) {
+        e.preventDefault();  //prevent form from submitting
+        let data = {};
+        data.otp = $('#otp').val();
+        data.phone_number = getUrlParameter("phone");
+        let json_data = JSON.stringify(data);
+        console.log(json_data);
+        user_request(json_data);
+    });
+});
+
 // ajax request - POST - User authorization through SmartDoor
 function user_request(payload) {
     $.ajax({
@@ -8,21 +20,16 @@ function user_request(payload) {
         contentType: 'application/json',
         data: JSON.stringify(payload),
         success: function (res) {
-            let message = 'Incorrect. Please try again.';
+            var user_name = null;
             if (res) {
                 message = 'The user was granted access through SmartDoor!';
-
-                 // Override username value from API response - username
-				 var response = JSON.parse(res);
-				 var user_name = response["body"].user_name;
-				 console.log(user_name);
-				 var user = getUserInfo(user_name);
-				 console.log(user);
+                console.log("res ====", res)
+                // Override username value from API response - username
+                user_name = res["user_name"];
+                console.log(user_name);
             }
-            $('#answer').html(message).css("color", "green");
-            $('#contact-submit').prop('disabled', true);
             console.log(res);
-            console.log(message);
+            window.location.href = "../html/door.html?user_name=" + user_name;
         },
         error: function (err) {
             let message_obj = JSON.parse(err.responseText);
@@ -48,8 +55,3 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-// Set username in door.html
-var user = function getUserInfo(user_name) {
-	console.log(user_name)
-	localStorage.setItem("username", user_name);  
-}

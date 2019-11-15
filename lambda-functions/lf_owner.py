@@ -9,6 +9,7 @@ import re
 resources_prefix = "cc-smart-door-"
 passcodes_table_name = resources_prefix + "passcodes"
 visitors_table_name = resources_prefix + "visitors"
+visitors_info_table = resources_prefix + "visitors-info"
 
 recognition_collection = "rekVideoBlog"
 app_region = "us-west-2"
@@ -40,18 +41,20 @@ def handler(event, context):
             return build_response(500, {"message": "Error parsing S3 Link"})
 
         # Index the face and get the faceID
-        face_id = index_face_and_get_face_id(bucket, key)
+        face_id = index_face_and_get_face_id(bucket, key, v_name)
 
         if not face_id:
             return build_response(500, {"message": {'contentType': 'PlainText', 'content': "No face detected"}})
 
         # Store into DynamoDB Tables
-        store_into_visitors(face_id, image_url, v_name, v_phone)
+        store_into_visitors(face_id, image_url, v_phone)
+        store_into_visitors_info(v_phone, v_name)
         store_into_passcodes(face_id)
         body = {"message": "This user is now authorised"}
         response = build_response(200, body)
     else:
-        response = build_response(500, {"message": validation_result["message"]})
+        response = build_response(
+            500, {"message": validation_result["message"]})
 
     return response
 
@@ -123,15 +126,24 @@ def format_phone(phone):
     return us_prefix + phone
 
 
-def store_into_visitors(face_id, image, name, phone_number):
+def store_into_visitors(face_id, image, phone_number):
     dynamodb = boto3.resource('dynamodb', region_name=app_region)
     visitors_table = dynamodb.Table(visitors_table_name)
     visitors_table.put_item(
         Item={
             "faceId": face_id,
             "phone_number": phone_number,
-            "name": name,
             "image": image
+        })
+
+
+def store_into_visitors_info(phone_number, name):
+    dynamodb = boto3.resource('dynamodb', region_name=app_region)
+    visitors_table = dynamodb.Table(visitors_info_table)
+    visitors_table.put_item(
+        Item={
+            "phone_number": phone_number,
+            "name": name
         })
 
 
@@ -140,7 +152,8 @@ def store_into_passcodes(face_id):
     dynamodb = boto3.resource('dynamodb', region_name=app_region)
     visitors_table = dynamodb.Table(visitors_table_name)
     passcode_table = dynamodb.Table(passcodes_table_name)
-    response = visitors_table.query(KeyConditionExpression=Key('faceId').eq(face_id))
+    response = visitors_table.query(
+        KeyConditionExpression=Key('faceId').eq(face_id))
     print("response =====")
     print(response['Items'])
     if len(response['Items']) > 0:
@@ -209,7 +222,7 @@ def index_face_and_get_face_id(bucket, key, image_id="1", region=app_region):
         },
         CollectionId=recognition_collection,
         ExternalImageId=image_id,
-        DetectionAttributes=(),
+        DetectionAttributes=['ALL'],
     )
     face_records = response['FaceRecords']
     if face_records and len(face_records) > 0:

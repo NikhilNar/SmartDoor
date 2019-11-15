@@ -1,44 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <link rel="stylesheet" type="text/css" href="../css/style.css">
-      <script type="text/javascript" src="../js/lib/axios/dist/axios.standalone.js"></script>
-      <script type="text/javascript" src="../js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
-      <script type="text/javascript" src="../js/lib/CryptoJS/rollups/sha256.js"></script>
-      <script type="text/javascript" src="../js/lib/CryptoJS/components/hmac.js"></script>
-      <script type="text/javascript" src="../js/lib/CryptoJS/components/enc-base64.js"></script>
-      <script type="text/javascript" src="../js/lib/url-template/url-template.js"></script>
-      <script type="text/javascript" src="../js/lib/apiGatewayCore/sigV4Client.js"></script>
-      <script type="text/javascript" src="../js/lib/apiGatewayCore/apiGatewayClient.js"></script>
-      <script type="text/javascript" src="../js/lib/apiGatewayCore/simpleHttpClient.js"></script>
-      <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
-      <script type="text/javascript" src="../js/apigClient.js"></script>
-      <!-- <script src="../js/visitor.js"></script> -->
-      <script>
-          function getUserInfo() {
-            user_name = localStorage.getItem("username");  
-            console.log(user_name)
-            document.getElementById("username").innerHTML = user_name;
-          }
-      </script>
 
-  </head>
-  <style>
-        body {
-          font-family: "Raleway", Helvetica, Arial, sans-serif;
-          font-weight: 100;
-          font-size: 12px;
-          line-height: 30px;
-          color: #777;
-          background: #57068c;
+<head>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script type="text/javascript" src="../js/lib/axios/dist/axios.standalone.js"></script>
+  <script type="text/javascript" src="../js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+  <script type="text/javascript" src="../js/lib/CryptoJS/rollups/sha256.js"></script>
+  <script type="text/javascript" src="../js/lib/CryptoJS/components/hmac.js"></script>
+  <script type="text/javascript" src="../js/lib/CryptoJS/components/enc-base64.js"></script>
+  <script type="text/javascript" src="../js/lib/url-template/url-template.js"></script>
+  <script type="text/javascript" src="../js/lib/apiGatewayCore/sigV4Client.js"></script>
+  <script type="text/javascript" src="../js/lib/apiGatewayCore/apiGatewayClient.js"></script>
+  <script type="text/javascript" src="../js/lib/apiGatewayCore/simpleHttpClient.js"></script>
+  <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
+  <script type="text/javascript" src="../js/apigClient.js"></script>
+  <script>
+    function getUserInfo() {
+      var user_name = getUrlParameter("user_name");
+      console.log(user_name)
+      var message = "Access Denied!!"
+      if (user_name != "undefined") {
+        console.log("inside if");
+        message = "Welcome " + user_name + "!!";
+      }
+
+      document.getElementById("message").innerHTML = message;
+
+    }
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+      var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+      console.log("sURLVariables========", sURLVariables)
+
+      for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? undefined : decodeURIComponent(sParameterName[1]);
         }
-    </style>
-  <body onLoad="getUserInfo()">
-    <div class="container">  
-      <form id="contact" action="" method="post">
-        <h1>Welcome</h1>
-        <h4 id="username"></h4>
-      </form>
-    </div>
-  </body>
+      }
+    };
+  </script>
+
+</head>
+<style>
+  body {
+    font-family: "Raleway", Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 30px;
+    color: #777;
+    background: #57068c;
+  }
+</style>
+
+<body onLoad="getUserInfo()">
+  <div class="container">
+    <form id="contact" action="" method="post">
+      <h4 id="message"></h4>
+    </form>
+  </div>
+</body>
+
 </html>

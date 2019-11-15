@@ -1,80 +1,65 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <link rel="stylesheet" type="text/css" href="../css/style.css">
-      <script type="text/javascript" src="../js/lib/axios/dist/axios.standalone.js"></script>
-      <script type="text/javascript" src="../js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
-      <script type="text/javascript" src="../js/lib/CryptoJS/rollups/sha256.js"></script>
-      <script type="text/javascript" src="../js/lib/CryptoJS/components/hmac.js"></script>
-      <script type="text/javascript" src="../js/lib/CryptoJS/components/enc-base64.js"></script>
-      <script type="text/javascript" src="../js/lib/url-template/url-template.js"></script>
-      <script type="text/javascript" src="../js/lib/apiGatewayCore/sigV4Client.js"></script>
-      <script type="text/javascript" src="../js/lib/apiGatewayCore/apiGatewayClient.js"></script>
-      <script type="text/javascript" src="../js/lib/apiGatewayCore/simpleHttpClient.js"></script>
-      <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
-      <script type="text/javascript" src="../js/apigClient.js"></script>
-      <script type="text/javascript" src="../js/visitor.js"></script>
-      <!-- Fetch OTP and Phone from URl -->
-      <script>
-        function authenticateUser() {
 
-          var otp = document.getElementById("otp").value; // fetch OTP from form
-          var phone = getUrlParameter("phone"); // fetch phone from URL
-          let data = {};
-          data.otp = otp;
-          data.phone = phone;
+<head>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script type="text/javascript" src="../js/lib/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="../js/lib/axios/dist/axios.standalone.js"></script>
+  <script type="text/javascript" src="../js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+  <script type="text/javascript" src="../js/lib/CryptoJS/rollups/sha256.js"></script>
+  <script type="text/javascript" src="../js/lib/CryptoJS/components/hmac.js"></script>
+  <script type="text/javascript" src="../js/lib/CryptoJS/components/enc-base64.js"></script>
+  <script type="text/javascript" src="../js/lib/url-template/url-template.js"></script>
+  <script type="text/javascript" src="../js/lib/apiGatewayCore/sigV4Client.js"></script>
+  <script type="text/javascript" src="../js/lib/apiGatewayCore/apiGatewayClient.js"></script>
+  <script type="text/javascript" src="../js/lib/apiGatewayCore/simpleHttpClient.js"></script>
+  <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
+  <script type="text/javascript" src="../js/apigClient.js"></script>
+  <script type="text/javascript" src="../js/visitor.js"></script>
+</head>
+<style>
+  body {
+    font-family: "Raleway", Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 30px;
+    color: #777;
+    background: rgb(235, 119, 52);
+  }
 
-          // Set value of phone in hidden field 'phone'
-          document.getElementById("phone").innerHTML = phone;
+  #contact button[type="submit"] {
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    background: rgb(235, 119, 52);
+    color: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+    font-size: 15px;
+  }
 
-          let json_data = JSON.stringify(data);
-          console.log(json_data);
-          user_request(json_data);
-        }
-      
-      </script>
-  </head>
-  <style>
-      body {
-        font-family: "Raleway", Helvetica, Arial, sans-serif;
-        font-weight: 100;
-        font-size: 12px;
-        line-height: 30px;
-        color: #777;
-        background: rgb(235, 119, 52);
-      }
+  #contact button[type="submit"]:hover {
+    background: rgb(235, 119, 52);
+    -webkit-transition: background 0.3s ease-in-out;
+    -moz-transition: background 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
+  }
+</style>
 
-      #contact button[type="submit"] {
-        cursor: pointer;
-        width: 100%;
-        border: none;
-        background: rgb(235, 119, 52); 
-        color: #FFF;
-        margin: 0 0 5px;
-        padding: 10px;
-        font-size: 15px;
-      }
+<body>
+  <div class="container">
+    <form id="contact" action="" method="post">
+      <h3>SmartDoor Authentication</h3>
+      <h4>Enter the OTP to enter the premises:</h4>
+      <fieldset>
+        <input name="otp" id="otp" placeholder="OTP" type="text" tabindex="1" value="" required autofocus>
+        <input type="hidden" id="phone" name="phone" value="value" />
+      </fieldset>
+      <fieldset>
+        <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+      </fieldset>
+    </form>
+  </div>
+</body>
 
-      #contact button[type="submit"]:hover {
-        background: rgb(235, 119, 52);
-        -webkit-transition: background 0.3s ease-in-out;
-        -moz-transition: background 0.3s ease-in-out;
-        transition: background-color 0.3s ease-in-out;
-      }
-  </style>
-  <body onLoad="authenticateUser()">
-    <div class="container">  
-      <form id="contact" action="https://smartdoorb1.s3-us-west-2.amazonaws.com/views/html/door.html" method="post">
-        <h3>SmartDoor Authentication</h3>
-        <h4>Enter the OTP to enter the premises:</h4>
-        <fieldset>
-          <input name ="otp" id="otp" placeholder="OTP" type="text" tabindex="1" value="" required autofocus>
-          <input type="hidden" id ="phone" name="phone" value="value"/>
-        </fieldset>
-        <fieldset>
-          <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
-        </fieldset>
-      </form>
-    </div>
-  </body>
 </html>
